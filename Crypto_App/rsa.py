@@ -17,6 +17,7 @@ class Rsa:
         private_key = key.export_key()
         # To open a file named private.pem 
         file_out = open("private.pem", "wb")
+        print(private_key)
         # To save the private key
         file_out.write(private_key)
         file_out.close()
@@ -24,6 +25,7 @@ class Rsa:
         public_key = key.publickey().export_key()
         # To open a file named public.pem
         file_out = open("public.pem", "wb")
+        print(public_key)
         # To save the the public key
         file_out.write(public_key)
         file_out.close()
