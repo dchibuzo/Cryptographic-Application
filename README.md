@@ -1,5 +1,5 @@
-# 6G7V0033-1CWK50-Cryptographic-Application
-Assignment
+# Cryptographic-Application
+Python implementations of RSA & AES cryptographic Algorithm
 
 ## Installation
 Install from pypi
