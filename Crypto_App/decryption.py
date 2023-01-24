@@ -54,23 +54,23 @@ class Decryption:
         # This is where you want to save the decrypted folder
         dec_folder = input("Where do you like to save the decrypted folder: ")
 
-        # Get the private key for decryption
+        # This Gets the private key for decryption
         private_key = input("Enter the private key name or path(in Pem formart): ")
         private_key = RSA.import_key(open(private_key).read())
 
-        # Check if the decryption folder already exists, if not create it
+        # To Check if the decryption folder already exists, if not create it
         os.makedirs(dec_folder, exist_ok=True)
 
-        # Decrypt each file in the encrypted folder
+        # To Decrypt each file in the encrypted folder
         for file_name in os.listdir(enc_folder):
             with open(os.path.join(enc_folder,file_name), 'rb') as f:
                 enc_session_key, nonce, tag, ciphertext = [ f.read(x) for x in (private_key.size_in_bytes(), 16, 16, -1) ]
 
-            # Decrypt the session key with the private RSA key
+            # To Decrypt the session key with the private RSA key
             cipher_rsa = PKCS1_OAEP.new(private_key)
             session_key = cipher_rsa.decrypt(enc_session_key)
 
-            # Decrypt the data with the AES session key
+            # To Decrypt the data with the AES session key
             cipher_aes = AES.new(session_key, AES.MODE_EAX, nonce)
             data = cipher_aes.decrypt_and_verify(ciphertext, tag)
             with open(os.path.join(dec_folder, file_name), 'wb') as f:
