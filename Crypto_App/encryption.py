@@ -28,19 +28,19 @@ class Encryption:
         # Read the contents of the file into a variable
         with open(file_name, "rb") as f:
             data = f.read()
-        # Prompt user for the name or path of the public key in PEM format
+        # To Prompt user for the name or path of the public key in PEM format
         key_name = input("Enter the name or path of the public key in PEM format: ")
-        # Read the public key using RSA.import_key
+        # To Read the public key using RSA.import_key
         with open(key_name, "rb") as f:
             public_key = RSA.import_key(f.read())
-        # Generate a random 16-byte session key
+        # To Generate a random 16-byte session key
         session_key = get_random_bytes(16)
-        # Encrypt the session key using the RSA key
+        # This Encrypts the session key using the RSA key
         cipher_rsa = PKCS1_OAEP.new(public_key)
         enc_session_key = cipher_rsa.encrypt(session_key)
-        # Create an AES cipher object in EAX mode
+        # THis Creates an AES cipher object in EAX mode
         cipher = AES.new(session_key, AES.MODE_EAX)
-        # Encrypt the data and create a tag
+        # To Encrypt the data and create a tag
         ciphertext, tag = cipher.encrypt_and_digest(data)
         # Create a new file called 'encrypted_file'
         with open(os.path.join(file_path,encfile_name), "wb") as f:
@@ -55,11 +55,11 @@ class Encryption:
         dir_path = input("Where do you like to save the encrypted folder: ")
         filedd = input("Enter the name of the folder or the folder path to be encrypted: ")
 
-        #Create a backup of the folder
+        #This Create a backup of the folder
         backup_folder = filedd + "_backup"
         shutil.copytree(filedd, backup_folder)
 
-        # Compress each file in the backup folder
+        # To Compress each file in the backup folder
         for file_name in os.listdir(backup_folder):
             with open(os.path.join(backup_folder,file_name), 'rb') as f_in, gzip.open(os.path.join(backup_folder,file_name+".gz"), 'wb') as f_out:
                 shutil.copyfileobj(f_in, f_out)
